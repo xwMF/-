@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>绝对定位与margin:auto（已知高度宽度）</title>
+		<style type="text/css">
+			/*绝对定位与margin:auto（已知高度宽度） 这种方式无需知道被垂直居中元素的高和宽，但不能兼容低版本的IE浏览器。*/
+			#container {
+			   position: relative;
+			   height: 200px;
+			   background-color: blueviolet;
+			}
+			#center {
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto; /* 注意此处的写法 */
+			}
+		</style>
+	</head>
+	<body>
+		<div id='container'>
+		    <div id='center' style="width: 100px;height: 100px;background-color: #666">center</div>
+		</div>
+	</body>
+</html>

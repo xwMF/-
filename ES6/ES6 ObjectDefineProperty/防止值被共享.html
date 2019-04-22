@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		// 如果访问者的属性是被继承的，它的 get 和set 方法会在子对象的属性被访问或者修改时被调用。如果这些方法用一个变量存值，该值会被所有对象共享。
+		function myClass() {
+			
+		}
+		var value;
+		Object.defineProperty(myClass.prototype, "x", {
+			get() {
+				return value
+			},
+			set(x) {
+				value = x;
+			}
+		});
+		
+		var a = new myClass();
+		var b = new myClass();
+		a.x = 1;
+		console.log(myClass);
+		console.log(myClass.prototype);
+		console.log(b.x); // b.x的值也为1 因为value 的值被共享了
+		
+		// 这可以通过将值存储在另一个属性中解决。在 get 和 set 方法中，this 指向某个被访问和修改属性的对象。
+		function myclass() {
+			
+		}
+
+		Object.defineProperty(myclass.prototype, "x", {
+		    get() {
+		    	console.log(this)
+		    	return this.stored_x;
+		  	},
+		    set(x) {
+		    	this.stored_x = x;
+		    }
+		});
+		
+		var c = new myclass();
+		var d = new myclass();
+		c.x = 1;
+		console.log(d.x); // undefined
+		
+		// 不像访问者属性，值属性始终在对象自身上设置，而不是一个原型。然而，如果一个不可写的属性被继承，它仍然可以防止修改对象的属性。
+		function Class() {
+			
+		}
+		
+		Class.prototype.x = 1;
+		Object.defineProperty(Class.prototype, "y", {
+		  	writable: false,
+		  	value: 1
+		});
+		
+		var e = new Class();
+		e.x = 2;
+		console.log(e.x); // 2
+		console.log(Class.prototype.x); // 1
+		e.y = 2; // Ignored, throws in strict mode
+		console.log(e.y); // 1
+		console.log(Class.prototype.y); // 1
+	</script>
+</html>

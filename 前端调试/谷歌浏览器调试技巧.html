@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>谷歌浏览器调试技巧</title>
+	</head>
+	<body>
+		<div onclick="sayHello()" class="selector">
+			sayHello
+		</div>
+	</body>
+	<script type="text/javascript">
+		function sayHello() {
+			console.log('sayHello');
+		}
+		// 1.将浏览器转换为编辑器
+//		你不再需要检查元素并编辑HTML。相反，进入开发人员控制台并输入以下内容:
+			document.body.contentEditable=true 
+//		这将使内容可编辑。现在，你几乎可以编辑DOM中的任何内容。
+
+		// 2.查找与DOM中的元素关联的事件
+//		调试时，需要查找 DOM 中某个元素的事件侦听器感时，谷歌控制台了 getEventListeners使找到这些事件更加容易且直观。
+//		getEventListeners($('selector'));
+//		返回一个对象数组，其中包含绑定到该元素的所有事件。你可以展开对象来查看事件:
+		
+//		找到特定事件的侦听器，可以这样做:
+//		getEventListeners($('selector')).eventName[0].listener  
+//		这里 eventName[0] 是一个数组，它列出了特定事件的所有事件。例如：
+//		getEventListeners($('firstName')).click[0].listener
+//		将显示与 ID 为 'firstName'的元素的单击事件关联的侦听器。
+		
+		// 3.监控事件
+//		如果希望在执行绑定到DOM中特定元素的事件时监视它们，也可以在控制台中这样做。你可以使用不同的命令来监控其中的一些或所有事件:
+		/* monitorEvents($(‘selector’)) 将监视与选择器的元素关联的所有事件     monitore($(#firstName)) 将打印 ID 为 firstName元素的所有事件
+		 * 
+		 * monitorEvents($(‘selector’),’eventName’) 将打印与元素绑定的特定事件      monitorEvents($(‘#firstName’),’click’) 将打印绑定到ID为'firstName'的元素的所有 click 事件
+		 * 
+		 * monitore($(selector)，[eventName1, eventName3'， .])将根据您自己的需求记录多个事件    monitore($(#firstName)，[click, focus])将记录与ID firstName元素绑定的 click事件和focus事件
+		 * 
+		 * unmonitorevent ($(selector)):这将停止监视和打印控制台中的事件
+		 * 
+		 */
+		
+		// 4.检查 DOM 中的一个元素
+//		你可以直接从控制台检查一个元素
+//		(1).inspect($(‘selector’)) 将检查与选择器匹配的元素，并转到 Chrome Developer Tools中的 Elements 选项卡。 例如， inspect($(‘#firstName’)) 将检查 ID为'firstName' 的元素，spect($(‘a’)[3]) 将检查 DOM 中的第 4 个 a 元素
+//		(2).$0, $1, $2 等可以帮助你获取最近检查过的元素。 例如，$0 表示最后检查的 DOM 元素，而$1 倒数第二个检查的 DOM 元素
+		
+		// 5.检索最后一个结果的值
+//		你可以将控制台用作计算器。当你这样做的时候，你可能需要用第二个来跟踪一个计算。以下是如何从内存中检索先前计算的结果:
+//		$_
+		
+		// 6.清除控制台和内存
+//		clear()
+		
+	</script>
+</html>

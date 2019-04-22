@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>多块级元素水平居中</title>
+		<style type="text/css">
+			.div1 {
+				/*1.利用弹性布局(flex)，实现水平居中，其中justify-content 用于设置弹性盒子元素在主轴（默认横轴）方向上的对齐方式，本例中设置子元素水平居中显示。*/
+				display: flex;
+				justify-content: center;
+				background-color: blueviolet;
+			}
+			.div1 > div {
+				margin: 0 10px;
+			}
+			.div1 > div:nth-child(1) {
+				background-color: black;
+				color: white;
+			}
+			.div1 > div:nth-child(2) {
+				background-color: blue;
+				color: white;
+			}
+			.div1 > div:nth-child(3) {
+				background-color: black;
+				color: white;
+			}
+			
+			.div2 {
+				/*2.利用inline-block 将要水平排列的块状元素设为display:inline-block，然后在父级元素上设置text-align:center，达到与上面的行内元素的水平居中一样的效果。*/
+				text-align: center;
+				background-color: blueviolet;
+			}
+			.div2 > div {
+				display: inline-block;
+				margin: 0 10px;
+			}
+			.div2 > div:nth-child(1) {
+				background-color: black;
+				color: white;
+			}
+			.div2 > div:nth-child(2) {
+				background-color: blue;
+				color: white;
+			}
+			.div2 > div:nth-child(3) {
+				background-color: black;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1">
+			<div>第一个div</div>
+			<div>第二个div</div>
+			<div>第三个div</div>
+		</div>
+		<br />
+		
+		<div class="div2">
+			<div>第一个div</div>
+			<div>第二个div</div>
+			<div>第三个div</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>块级元素垂直居中</title>
+		<style type="text/css">
+			/*1.使用absolute+负margin(已知高度宽度) 通过绝对定位元素距离顶部50%，并设置margin-top向上偏移元素高度的一半，就可以实现了。*/
+			.div1 {
+			   position: relative;
+			   height: 300px;
+			   background-color: blueviolet;
+			}
+			.div2 {
+			   position: absolute;  
+			   top: 50%;
+			   height: 100px;
+			   margin-top: -50px;
+			   background-color: black;
+			   color: white;
+			   line-height: 100px;
+			}
+			
+			/*2.使用absolute+transform 当垂直居中的元素的高度和宽度未知时，可以借助CSS3中的transform属性向Y轴反向偏移50%的方法实现垂直居中。但是部分浏览器存在兼容性的问题。*/
+			.div3 {
+			   position: relative;
+			   height: 100px;
+			   background-color: blueviolet;
+			}
+			.div4 {
+			   position: absolute;  
+			   top: 50%;
+			   transform: translateY(-50%);
+			   background-color: black;
+			   color: white;
+			}
+			
+			/*3.使用flex+align-items 通过设置flex布局中的属性align-items，使子元素垂直居中。*/
+			.div5 {
+			    display:flex;
+			    align-items:center;
+			    background-color: blueviolet;
+			    height: 100px;
+			}
+			
+			/*4.使用table-cell+vertical-align 通过将父元素转化为一个表格单元格显示（类似 <td> 和 <th>），再通过设置 vertical-align属性，使表格单元格内容垂直居中。*/
+			.div7 {
+				display: table;
+				background-color: blueviolet;
+			    height: 100px;
+			}
+			.div8 {
+				display: table-cell;
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1">
+			<div class="div2">
+				demodemodemodemodemodemo
+			</div>
+		</div>
+		<br />
+		
+		<div class="div3">
+			<div class="div4">
+				demodemodemodemodemodemo
+			</div>
+		</div>
+		<br />
+		
+		<div class="div5">
+	    	<div class="div6">demodemodemodemodemodemo</div>
+		</div>
+		<br />
+		
+		<div class="div7">
+	    	<div class="div8">demodemodemodemodemodemo</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>flex/grid与margin:auto</title>
+		<style type="text/css">
+			#container {
+				background-color: blueviolet;
+			  	height: 100vh; /* 必须有高度 */
+			  	display: grid;
+			}
+			#center {
+			  	margin: auto; /* 注意此处写法 */
+			  	line-height: 100px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='container'>
+		    <div id='center' style="width: 100px;height: 100px;background-color: #666">center</div>
+		</div>
+	</body>
+</html>

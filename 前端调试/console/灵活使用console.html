@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>灵活使用console.html</title>
+	</head>
+	<body>
+		<div id="2x-container">
+			<div class="item">
+				<div tabindex="-1">
+					
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+//		1.格式化输出    console.log(msg, values)
+		console.log('I like %s but I do not like %s.', 'Skittles', 'pus');
+//		常见的占位符 %o (这是字母o，不是0)，它接受对象，%s 接受字符串，%d 表示小数或整数。
+		var user = {
+			name: 'Susan'
+		};
+		console.log('The state object for %s is %o', 'Susan', user);
+//		另一个有趣的是 %c，这可能与你所想不太相同，它实际上是CSS值的占位符。使用%c占位符时，对应的后面的参数必须是CSS语句，用来对输出内容进行CSS渲染。常见的输出方式有两种：文字样式、图片输出
+		console.log('I am a %cbutton', 'color: white; background-color: orange; padding: 2px 5px; border-radius: 2px');
+		console.log('%c This is very big large font', 'font-size: 35px; color: red');
+		
+//		2.console.dir()
+//		在大多数情况下，console.dir() 的函数非常类似于 log()，尽管它看起来略有不同。
+		var obj = {
+			id: 35,
+			item: 'jumper',
+			color: 'red',
+			size: 'medium',
+			price: 20
+		}
+		console.log(obj);
+		console.dir(obj);
+//		当你查看元素的结构时候，你会发现它们之间的差异更大，也更有趣。
+		var element = document.getElementById('2x-container');
+		console.log(element);
+		console.dir(element);// console.dir(element)给出了更加方便查看 DOM 结构的输出：更像是检查元素
+		
+//		3.console.warn()
+//		可能是最明显的直接替换 log()，你可以以完全相同的方式使用 console.warn()。 唯一真正的区别是输出字的颜色是黄色的。
+		console.warn('这是一个警告！');
+		
+//		4.console.table()
+//		console.table() 函数旨在以一种比仅仅转出原始对象数组更整洁的方式显示表格数据。
+		const data = [
+			{
+				id: "7cb1-e041b126-f3b8",
+				seller: "WAL0412",
+				buyer: "WAL3023",
+				price: 203450,
+				time: 1539688433
+			},
+			{
+				id: "1d4c-31f8f14b-1571",
+				seller: "WAL0452",
+				buyer: "WAL3023",
+				price: 348299,
+				time: 1539688433
+			},
+			{
+				id: "b12c-b3adf58f-809f",
+				seller: "WAL0012",
+				buyer: "WAL2025",
+				price: 59240,
+				time: 1539688433
+			}
+		];
+		console.log(data);
+		console.table(data);
+//		第二个可选参数是所需列的列表。显然，所有列都是默认值，但我们也可以这样做
+//		console.table() 只能处理最多1000行，因此它可能不适合所有数据集
+		console.table(data, ['id', 'price']);
+		
+//		5.console.assert()
+//		assert() 与 log() 是相同的函数，assert()是对输入的表达式进行断言，只有表达式为false时，才输出相应的信息到控制台，示例如下：
+		let arr = [1, 2, 3];
+		console.assert(arr.length === 4);
+		
+//		6.console.count()
+//		count只是作为一个计数器，或者作为一个命名计数器，可以统计代码被执行的次数。
+		for(let i = 0; i < 100; i++) {
+			if(i % 2) {
+				console.count('odds');
+			}
+			if(!(i % 5)) {
+				console.count('multiplesOfFive');
+			}
+		}
+		
+//		7.console.time()
+//		console.time() 是一个用于跟踪操作时间的专用函数，它是跟踪 JavaScript执行时间的好方法。
+		const slowFunction = number =>  {
+			console.time('slowFunction');
+			// something slow or complex with the numbers. 
+			// Factorials, or whatever.
+			console.timeEnd('slowFunction');
+		}
+		console.time();
+		
+		for (i = 0; i < 100; ++i) {
+		    slowFunction(i);
+		}
+		console.timeEnd();
+	</script>
+</html>

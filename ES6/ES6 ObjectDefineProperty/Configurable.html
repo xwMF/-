@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Configurable</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		var o = {};
+		// configurable特性表示对象的属性是否可以被删除，以及除value和writable特性外的其他特性是否可以被修改。
+		Object.defineProperty(o, "a", {
+			get: function() {
+				return 1;
+			},
+			configurable: false
+		});
+		console.log(o.a);
+	</script>
+</html>

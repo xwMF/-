@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		// 将字符串"123456789" 转换成  整型  123456789
+		function string2int(s) {
+			if (typeof(s) !== 'string') throw new Error("参数必须是字符串");
+			function toNumArr(s) {
+				var stringArr = s.split('');
+				function toNum(data) {
+					return +data;
+				}
+				return stringArr.map(toNum);
+			}
+			var numArr = toNumArr(s);
+		    return numArr.reduce(function (x, y) {
+		        return x * 10 + y
+		    });
+		}
+		 console.log(string2int("123456789"));
+
+
+		// 输入：['adam', 'LISA', 'barT']，输出：['Adam', 'Lisa', 'Bart']。
+		function normalize(arr) {
+			function toLower(data) {
+				if (typeof(data) !== 'string') throw new Error("参数必须是字符串");
+				var lowerString = data.toLowerCase();
+				return lowerString.substring(0, 1).toUpperCase() + lowerString.substring(1);
+			}
+			return arr.map(toLower);
+		}
+		console.log(normalize(['adam', 'LISA', 'barT']));
+	</script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>面向对象编程</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		// JavaScript不区分类和实例的概念，而是通过原型（prototype）来实现面向对象编程
+		var Student = {
+		    name: 'Robot',
+		    height: 1.2,
+		    run: function () {
+		        console.log(this.name + ' is running...');
+		    }
+		};
+		
+		var xiaoMing = {
+			name: "小明"
+		}
+		console.log(xiaoMing);
+		
+		xiaoMing.__proto__ = Student;
+		console.log(xiaoMing);
+		console.log(xiaoMing.name);
+		xiaoMing.run();
+		// xiaoming有自己的name属性，但并没有定义run()方法。不过，由于小明是从Student继承而来，只要Student有run()方法，xiaoming也可以调用：
+		// 所谓继承关系不过是把一个对象的原型指向另一个对象而已
+		
+		var Bird = {
+		    fly: function () {
+		        console.log(this.name + ' is flying...');
+		    }
+		};
+		
+		xiaoMing.__proto__ = Bird;
+		xiaoMing.fly();
+		//xiaoMing.run();//报错 现在xiaoming已经无法run()了，他已经变成了一只鸟
+		
+//		在编写JavaScript代码时，不要直接用obj.__proto__去改变一个对象的原型，并且，低版本的IE也无法使用__proto__。Object.create()方法可以传入一个原型对象，
+//		并创建一个基于该原型的新对象，但是新对象什么属性都没有，因此，我们可以编写一个函数来创建xiaoming
+		function creatStudent (name) {
+			// 基于Student原型创建一个新对象:
+			var stu = Object.create(Student);
+			// 初始化新对象:
+			stu.name = name;
+			return stu;
+		}
+		
+		var newXiaoMing = creatStudent("新的小明");
+		newXiaoMing.run();
+		
+		console.log(newXiaoMing.__proto__ === Student);
+		
+	</script>
+</html>

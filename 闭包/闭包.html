@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		function f(x) {
+			var g = function () {
+				return x; 
+			} 
+			return g;
+		}
+		var h = f(1);
+		alert(h()); // 1
+		// 函数的作用域是在定义函数时候就已经确定，而不是在执行的时候确定
+		// h的作用域链为：h的活动对象->f的活动对象->window对象
+		
+		// 参考：https://www.cnblogs.com/vicky1018/p/7694122.html
+	</script>
+</html>

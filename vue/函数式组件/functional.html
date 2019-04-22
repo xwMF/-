@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>函数式组件functional</title>
+	</head>
+	<body>
+		<div id="app">
+		    <smart-list :items=items></smart-list>
+		</div>
+	</body>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript">
+		//当父组件传过来的是空items时
+    	var EmptyList = {template: '<p>Empty list</p>'};
+    	//当父组件传来的items元素为对象类型时
+    	var TableList = 'ul'
+    	// 当父组件定义了isOrdered变量且为true
+    	var UnorderedList = 'ul'
+ 
+    	//定义组件
+	    Vue.component('smart-list', {
+	        //标记为函数式组件
+	        functional: true,
+	 
+	        //render函数
+	        render: function (createElement, context) {
+	        	//若不理解可以打印出来context来看看里面都有些什么东西
+	            console.log(createElement);
+	            console.log(context);
+	 
+	            //规定组件的渲染规则
+	            function appropriateListComp() {
+	                //获取父组件传来的数据
+	                var items = context.props.items;
+	 
+	                //若空，则返回前面定义的emptylist
+	                if (items.length === 0) return EmptyList;
+	                //若为对象
+	                if (typeof items[0] === 'object') return TableList;
+	                //其他
+	                return UnorderedList
+	            }
+	 
+	            //生成模板
+	            return createElement(
+	                //模板标记为渲染规则函数返回值
+	                appropriateListComp(),
+	                //模板子元素，返回一个数组
+	                Array.apply(null, {length: context.props.items.length}).map(function (value, index) {
+	                    return createElement('li',context.props.items[index].name)
+	                })
+	            )
+	        },
+	        props: {
+	            items: {
+	                type: Array,
+	                required: true
+	            },
+	            isOrdered: Boolean
+	        }
+	    });
+	    new Vue({
+	        el: '#app',
+	        data:{
+	            items:[
+	                {
+	                    name:'a',
+	                    id:0
+	                },
+	                {
+	                    name:'b',
+	                    id:1
+	                },
+	                {
+	                    name:'c',
+	                    id:2
+	                }
+	            ]
+	        }
+	    });
+		// https://blog.csdn.net/mystric594/article/details/78799148 
+	</script>
+</html>

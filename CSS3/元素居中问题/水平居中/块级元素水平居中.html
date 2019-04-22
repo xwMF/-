@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>块级元素水平居中</title>
+		<style type="text/css">
+			.div1 {
+				/*1.将该块级元素左右外边距margin-left和margin-right设置为auto*/
+				width: 260px; /*确保该块级元素定宽*/
+    			margin:0 auto;
+    			background-color: blueviolet;
+			}
+			
+			.div2 {
+				background-color: blueviolet;
+			}
+			.div3 {
+				/*2.使用table+margin  先将子元素设置为块级表格来显示（类似），再将其设置水平居中,display:table在表现上类似block元素，但是宽度为内容宽。*/
+			    display: table;
+			    margin: 0 auto;
+			    
+			    background-color: black;
+			    color: white;
+		  	}
+		  	
+		  	/*3.使用absolute+transform 先将父元素设置为相对定位，再将子元素设置为绝对定位，向右移动子元素，移动距离为父容器的一半，最后通过向左移动子元素的一半宽度以达到水平居中。*/
+		  	.div4 {
+			  	position: relative;
+			  	background-color: blueviolet;
+			  	height: 24px;
+		  	}
+		  	.div5 {
+		  		position: absolute;
+			  	left: 50%;
+			  	transform: translateX(-50%);
+		  	
+			  	background-color: black;
+			    color: white;
+			}
+		  	
+		  	/*4.使用flex+justify-content 通过CSS3中的布局利器flex中的justify-content属性来达到水平居中。*/
+			.div6 {
+			  	display: flex;
+			  	justify-content: center;
+			  	background-color: blueviolet;
+			}
+			.div7 {
+			  	background-color: black;
+			    color: white;
+			}
+			 
+			/*5.使用flex+margin 通过flex将父容器设置为为Flex布局，再设置子元素居中。*/
+			.div8 {
+			  	display: flex;
+			  	background-color: blueviolet;
+			}
+			.div9 {
+			  	margin: 0 auto;
+			  	background-color: black;
+			    color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1">
+			1.margin:0 auto 块级元素水平居中
+		</div>
+		<br />
+		
+		<div class="div2">
+  			<div class="div3">
+  				2.使用table+margin 块级元素水平居中
+  			</div>
+		</div>
+		<br />
+		
+		<div class="div4">
+			<div class="div5">
+				3.使用absolute+transform 块级元素水平居中
+			</div>
+		</div>
+		<br />
+		
+		<div class="div6">
+			<div class="div7">
+				4.使用flex+justify-content 块级元素水平居中
+			</div>
+		</div>
+		<br />
+		
+		<div class="div8">
+			<div class="div9">
+				5.使用flex+margin 块级元素水平居中
+			</div>
+		</div>
+	</body>
+</html>

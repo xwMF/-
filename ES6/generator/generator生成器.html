@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>generator生成器</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		// generator和函数不同的是，generator由function*定义（注意多出的*号），并且，除了return语句，还可以用yield返回多次。
+		function* foo(x) {
+			yield x + 1;
+			yield x + 2;
+			return x + 3;
+		}
+		var f = foo(1);
+		console.log(f);
+		console.log(f.next());
+		console.log(f.next());
+		console.log(f.next());
+		// 用generator对象有两个方法，一是不断地调用generator对象的next()方法：
+		// 第二个方法是直接用for ... of循环迭代generator对象，这种方式不需要我们自己判断done：
+		
+		function* next_id() {
+		    var id = 1;
+		    while(true){
+		        yield id++;
+		    }
+		}
+		// 测试:
+		var
+		    x,
+		    pass = true,
+		    g = next_id();
+		for (x = 1; x < 100; x ++) {
+		    if (g.next().value !== x) {
+		        pass = false;
+		        console.log('测试失败!');
+		        break;
+		    }
+		}
+		if (pass) {
+		    console.log('测试通过!');
+		}
+	</script>
+</html>

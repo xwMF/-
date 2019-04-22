@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>绝对定位与负边距实现(已知高宽)</title>
+		<style type="text/css">
+			/*绝对定位与负边距实现（已知高度宽度） 这种方式需要知道被垂直居中元素的高和宽，才能计算出margin值，兼容所有浏览器。*/
+			#container {
+			   position: relative;
+			   height: 200px;
+			   background-color: blueviolet;
+			}
+			#center {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin: -50px 0 0 -50px;
+				
+				text-align: center;
+				line-height: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='container'>
+		    <div id='center' style="width: 100px;height: 100px;background-color: #666">center</div>
+		</div>
+	</body>
+</html>

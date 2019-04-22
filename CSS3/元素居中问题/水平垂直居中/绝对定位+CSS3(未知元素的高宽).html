@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>绝对定位+CSS3(未知元素的高宽)</title>
+		<style type="text/css">
+			#container {
+				position: relative;
+				height: 200px;
+				background-color: blueviolet;
+			}
+			#center {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		</style>
+	</head>
+	<body>
+		<div id='container'>
+		    <div id='center' style="width: 100px;height: 100px;background-color: #666">center</div>
+		</div>
+	</body>
+</html>

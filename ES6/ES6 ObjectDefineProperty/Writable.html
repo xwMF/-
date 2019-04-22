@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+  		<meta name="viewport">
+		<title>Writable</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		var o = {};
+		Object.defineProperty(o, "a", {
+			value: 37,
+			writable: false // 当writable属性设置为false时，该属性被称为“不可写”。它不能被重新分配。
+		});
+		console.log("o.a: " + o.a); // 37
+		
+		o.a = 25; // 无法修改
+		
+		console.log("o.a: " + o.a); // 37
+		
+		// strict mode 严格模式
+		(function() {
+			'use strict';
+		    var o = {};
+	    	Object.defineProperty(o, 'b', {
+		    	value: 2,
+		    	writable: false
+		  	});
+		  	o.b = 3; // throws TypeError: "b" is read-only
+		  	return o.b; // returns 2 without the line above
+		}());
+		
+		// 如示例所示，试图写入非可写属性不会改变它，也不会引发错误。
+	</script>
+</html>

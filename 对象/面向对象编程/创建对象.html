@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>创建对象</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		// JavaScript对每个创建的对象都会设置一个原型，指向它的原型对象。
+		// 当我们用obj.xxx访问一个对象的属性时，JavaScript引擎先在当前对象上查找该属性，如果没有找到，就到其原型对象上找，
+		// 如果还没有找到，就一直上溯到Object.prototype对象，最后，如果还没有找到，就只能返回undefined。
+		
+		var arr = [1, 2, 3];
+		// arr的原型链就是  arr ---> Array.prototype ---> Object.prototype ---> null
+		// Array.prototype定义了indexOf()、shift()等方法，因此你可以在所有的Array对象上直接调用这些方法。
+		
+		// 创建对象的方法
+		// 1.构造函数
+		function Student (name) {
+			this.name = name;
+			this.hello = function () {
+				console.log(`hello,${this.name}!`);
+			}
+		}
+		
+		var xiaoming = new Student('小明');
+		console.log(xiaoming.name); 	
+		xiaoming.hello();
+		// 新创建的小明的原型链为  xiaoming ---> Student.prototype ---> Object.prototype ---> null
+		
+		// 用new Student()创建的对象还从原型上获得了一个constructor属性，它指向函数Student本身：
+		console.log(xiaoming.prototype); // undefined
+		console.log(xiaoming.constructor);
+		console.log(Student);
+		console.log(Student.prototype);
+		console.log(Student.prototype.constructor);
+		
+		console.log(xiaoming.constructor === Student.prototype.constructor); // true
+		console.log(Student.prototype.constructor === Student); // true
+		Object.getPrototypeOf(xiaoming) === Student.prototype; // true
+		xiaoming instanceof Student; // true
+		
+		
+//		如果我们通过new Student()创建了很多对象，这些对象的hello函数实际上只需要共享同一个函数就可以了，这样可以节省很多内存。
+//		要让创建的对象共享一个hello函数，根据对象的属性查找原则，我们只要把hello函数移动到xiaoming、xiaohong这些对象共同的原型上就可以了，也就是Student.prototype：
+		Student.prototype.hello = function () {
+			console.log(`hello,${this.name}!`);
+		}
+		console.log(Student.prototype);
+		
+//		忘记写new怎么办
+//		如果一个函数被定义为用于创建对象的构造函数，但是调用时忘记了写new怎么办？
+//		在strict模式下，this.name = name将报错，因为this绑定为undefined，在非strict模式下，this.name = name不报错，因为this绑定为window，于是无意间创建了全局变量name，并且返回undefined，这个结果更糟糕。
+//		所以，调用构造函数千万不要忘记写new。为了区分普通函数和构造函数，按照约定，构造函数首字母应当大写，而普通函数首字母应当小写
+
+		// 我们还可以编写一个createStudent()函数，在内部封装所有的new操作
+		function Student1(props) {
+		    this.name = props.name || '匿名'; // 默认值为'匿名'
+		    this.grade = props.grade || 1; // 默认值为1
+		}
+		
+		Student1.prototype.hello = function () {
+		    alert('Hello, ' + this.name + '!');
+		};
+		
+		function createStudent(props) {
+		    return new Student1(props || {});
+		}
+		
+		// 这个createStudent()函数有几个巨大的优点：一是不需要new来调用，二是参数非常灵活，可以不传，也可以这么传：
+		var xiaoming1 = createStudent({
+		    name: '小明'
+		});
+		xiaoming1.grade; // 1
+	</script>
+</html>

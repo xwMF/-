@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>绝对定位元素水平居中</title>
+		<style type="text/css">
+			.div1 {
+				position: relative;
+			}
+			.div2 {
+				position: absolute;
+				width: 200px;
+				height: 100px;
+				background: yellow;
+				margin: 0 auto; /*水平居中*/
+				left: 0;  /*此处不能省略，且为0*/
+         		right: 0; /*此处不能省略，且为0*/
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1">
+			<div class="div2">
+				让绝对定位的元素水平居中对齐。
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>浮动元素水平居中</title>
+		<style type="text/css">
+			.div1 {
+				width: auto;
+				height: 100px;
+				background-color: blueviolet;
+			}
+			.span1 {
+				float: left;
+				width: 500px;
+				background-color: black;
+				color: white;
+				/*1.定宽的非浮动元素   通过子元素设置relative + 负margin*/
+				position: relative;
+				left: 50%;
+				margin-left: -250px;
+			}
+			
+			.box {
+				/*2.不定宽的浮动元素 通过父子容器都相对定位 注意：要清除浮动，给外部元素加上float。这里的父元素就是外部元素*/
+				background-color: blueviolet;
+				float: left;
+				position: relative;
+				left: 50%;
+			}
+			.box > p {
+				float: left;
+				position: relative;
+				right: 50%;
+			}
+			
+			.div2 {
+				/*3.通用办法flex布局(不管是定宽还是不定宽) 利用弹性布局(flex)的justify-content属性，实现水平居中。*/
+				display: flex;
+				justify-content: center;
+				background-color: blueviolet;
+				margin-top: 100px;
+				height: 30px;
+			}
+			.span2 {
+				float: left; /*浮动效果会失效*/
+				background-color: black;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1">
+			<span class="span1">
+				我是要居中的浮动元素
+			</span>
+		</div>
+		<br />
+		
+		<div class="box">
+			<p>我是浮动的</p>
+			<p>我也是居中的</p>
+		</div>
+		<br />
+		
+		<div class="div2">
+			<span class="span2">
+				我是要居中的浮动元素
+			</span>
+		</div>
+	</body>
+</html>

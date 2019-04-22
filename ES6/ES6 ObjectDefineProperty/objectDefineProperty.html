@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+  		<meta name="viewport">
+		<title>objectDefineProperty</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		var o = {};
+		Object.defineProperty(o, "a", {
+			value: 37,
+			configurable: true,
+			enumerable: true,
+			writable: true
+		});
+		console.log("o.a: " + o.a);
+		
+		var bValue;
+		Object.defineProperty(o, "b",{
+			get: function() {
+				console.log("---读取值---");
+				return bValue;
+			},
+			set: function(newValue) {
+				bValue = newValue;
+				console.log("---设置值---");
+			},
+			enumerable: true,
+			configurable: true
+		});
+		
+		console.log("o.b: " + o.b);
+		o.b = 38;
+		console.log("o.b: " + o.b);
+		console.log("bValue: " + bValue);
+	</script>
+</html>

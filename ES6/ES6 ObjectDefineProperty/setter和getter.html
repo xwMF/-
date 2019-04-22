@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		// 下面的例子展示了如何实现一个自存档对象。 当设置temperature 属性时，archive 数组会获取日志条目。
+		function Archiver() {
+			var temperature = null;
+			var archiver = [];
+			Object.defineProperty(this, "temperature",{
+				get: function() {
+					console.log("---get---");
+					return temperature;
+				},
+				set: function(val) {
+					console.log("---set---");
+					temperature = val
+					archiver.push( { val: temperature } );
+				}
+			});
+			
+			this.getArchiver = function() {
+				return archiver
+			}
+		}
+		
+		var arc = new Archiver();
+		console.log("arc.temperature :" + arc.temperature);
+		arc.temperature = 11;
+		arc.temperature = 13;
+		console.log(arc.getArchiver()); // [{ val: 11 }, { val: 13 }]
+		
+		console.log("分割线：=================================");
+		
+		var pattern = {
+			get: function() {
+				return "我始终将返回这一行文字，不管你如何指定";
+			},
+			set: function() {
+				this.myName = "这就是我自己的名字";
+			}
+		};
+		
+		function TestDefineSetAndGet() {
+			Object.defineProperty(this, "myproperty", pattern);
+		}
+		
+		var instance = new TestDefineSetAndGet();
+		
+		console.log("instance.myproperty： " + instance.myproperty);
+		instance.myproperty = "test";
+		console.log("instance.myproperty： " + instance.myproperty);
+		
+		console.log("instance.myName：" + instance.myName); // 继承来的属性
+	</script>
+</html>
