@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>向对象编程（三）：非构造函数的继承</title>
+  <link rel="stylesheet" href="../font.css">
+</head>
+<body>
+    向对象编程（三）：非构造函数的继承
+</body>
+<script>
+  // 一、什么是"非构造函数"的继承？
+  // 比如，现在有一个对象，叫做"中国人"
+  let Chinese = {
+　　nation:'中国'
+　};
+  // 还有一个对象，叫做"医生"。
+  let Doctor = {
+　　career:'医生'
+　}
+  // 请问怎样才能让"医生"去继承"中国人"，也就是说，我怎样才能生成一个"中国医生"的对象？
+
+
+
+  // 二：object方法
+  // json格式的发明人Douglas Crockford，提出了一个object()函数，可以做到这一点。
+  function object(obj) {
+    let F = function() {};
+    F.prototype = obj;
+    return new F();
+  }
+  // 这个object()函数，其实只做一件事，就是把子对象的prototype属性，指向父对象，
+  // 从而使得子对象与父对象连在一起
+  let Chinese1 = {
+　　nation:'中国'
+　};
+  let Doctor1 = object(Chinese1);
+  Doctor1.career = '医生';
+  console.log(Doctor1);
+  console.log(Doctor1.nation);  // 中国
+
+
+
+  // 三：浅拷贝
+  // 把父对象的属性，全部拷贝给子对象，也能实现继承
+  function extendCopy(p) {
+    let c = {};
+    for(let i in p) {
+      c[i] = p[i]
+    }
+    c.uber = p;
+    return c;
+  }
+  let Chinese2 = {
+　　nation:'中国'
+　};
+  let Doctor2 = extendCopy(Chinese2);
+  Doctor2.career = '医生';
+  console.log(Doctor2.nation);  // 中国
+
+  // 但是，这样的拷贝有一个问题。那就是，如果父对象的属性等于数组或另一个对象，
+  // 那么实际上，子对象获得的只是一个内存地址，而不是真正拷贝，因此存在父对象被篡改的可能
+  
+  // 现在给Chinese3添加一个"出生地"属性，它的值是一个数组
+  let Chinese3 = {
+　　nation:'中国',
+    birthPlaces: ['北京', '上海', '香港']
+　};
+  let Doctor3 = extendCopy(Chinese3);
+  // 然后，我们为Doctor的"出生地"添加一个城市：
+  Doctor3.birthPlaces.push('厦门');
+  console.log(Doctor3.birthPlaces);   // ["北京", "上海", "香港", "厦门"]
+  console.log(Chinese3.birthPlaces);  // ["北京", "上海", "香港", "厦门"]
+  // 可以发现Chinese的"出生地"也被改掉了！
+  // 所以，extendCopy()只是拷贝基本类型的数据，我们把这种拷贝叫做"浅拷贝"。
+
+
+
+  // 四：深拷贝
+  // 所谓"深拷贝"，就是能够实现真正意义上的数组和对象的拷贝。它的实现并不难，只要递归调用"浅拷贝"就行了。
+  function deepCopy(p, b) {
+    let c = b || {};
+    for(let i in p) {
+      if (typeof p[i] === 'object') {
+        c[i] = (p[i].constructor === Array) ? [] : {};
+        deepCopy(p[i], c[i]);
+      } else {
+        c[i] = p[i];
+      }
+    }
+    return c;
+  }
+  let Chinese4 = {
+　　nation:'中国',
+    birthPlaces: ['北京', '上海', '香港']
+　};
+  let Doctor4 = deepCopy(Chinese4);
+  Doctor4.birthPlaces.push('厦门');
+  console.log(Doctor4.birthPlaces);   // ["北京", "上海", "香港", "厦门"]
+  console.log(Chinese4.birthPlaces);  // ["北京", "上海", "香港"]
+
+
+</script>
+</html>
