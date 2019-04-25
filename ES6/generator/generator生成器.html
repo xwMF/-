@@ -3,8 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>generator生成器</title>
+		<link rel="stylesheet" href="../font.css">
 	</head>
 	<body>
+		generator生成器
 	</body>
 	<script type="text/javascript">
 		// generator和函数不同的是，generator由function*定义（注意多出的*号），并且，除了return语句，还可以用yield返回多次。
@@ -15,9 +17,9 @@
 		}
 		var f = foo(1);
 		console.log(f);
-		console.log(f.next());
-		console.log(f.next());
-		console.log(f.next());
+		console.log(f.next());	// {value:2, done: false}
+		console.log(f.next());	// {value:3, done: false}
+		console.log(f.next());	// {value:4, done: false}
 		// 用generator对象有两个方法，一是不断地调用generator对象的next()方法：
 		// 第二个方法是直接用for ... of循环迭代generator对象，这种方式不需要我们自己判断done：
 		

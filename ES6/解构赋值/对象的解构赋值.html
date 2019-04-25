@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>对象的解构赋值</title>
+  <link rel="stylesheet" href="../font.css">
+</head>
+<body>
+    对象的解构赋值
+</body>
+<script>
+  let {foo, bar} = {foo: 'foo', bar: 'bar'};
+  console.log(foo);   // 'foo'
+  console.log(bar);   // 'bar'
+  // 对象的解构与数组有一个重要的不同。数组的元素是按次序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值
+  let {bar1, foo1} = {foo1: 'foo1', bar1: 'bar1'};
+  console.log(foo1);   // 'foo1'
+  console.log(bar1);   // 'bar1'
+  let {baz} = {foo: 'foo', bar: 'bar'};
+  console.log(baz);   // undefined
+  // 上面代码的第一个例子，等号左边的两个变量的次序，与等号右边两个同名属性的次序不一致，但是对取值完全没有影响。
+  // 第二个例子的变量没有对应的同名属性，导致取不到值，最后等于undefined。
+
+  // 如果解构失败，变量的值等于undefined。
+  let {foo2} = {bar2: 'bar2'};
+  console.log(foo2)   // undefined
+  // 上面代码中，等号右边的对象没有foo属性，所以变量foo取不到值，所以等于undefined。
+
+  // 对象的解构赋值，可以很方便地将现有对象的方法，赋值到某个变量。
+  // 例一
+  const {sin, cos} = Math;
+  console.log(sin);
+  console.log(cos);
+  // 例二
+  const {log} = console;
+  log('Hello World!');
+  log(log);
+  // 上面代码的例一将Math对象的正弦、余弦三个方法，赋值到对应的变量上，使用起来就会方便很多。例二将console.log赋值到log变量。
+
+  // 如果变量名与属性名不一致，必须写成下面这样。
+  let {foo3: baz3} = {foo3: 'foo3', bar3: 'bar3'};
+  log(baz3);
+  let obj = {foo4: 'foo4', bar4: 'bar4'};
+  let {foo4: foo5, bar4: bar5} = obj;
+  log('foo5 is %s,bar5 is %s', foo5, bar5);
+  // 这实际上说明，对象的解构赋值是下面形式的简写
+  /*
+    let { foo: foo, bar: bar } = { foo: 'aaa', bar: 'bbb' };
+    也就是说，对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者。
+  */
+  let {foo6: baz6} = {foo6: 'foo6', bar6: 'bar6'};
+  log(baz6);  // 'foo6'
+  // log(foo6);  // foo6 is not defined
+  // 上面代码中，foo6是匹配的模式，baz6才是变量。真正被赋值的是变量baz6，而不是模式foo6
+  
+  // 与数组一样，解构也可以用于嵌套结构的对象。
+  let obj1 = {
+    p: [
+      'hello',
+      {w: "w"}
+    ]
+  };
+  let {p: [x, { w } ]} = obj1;
+  log(x);   // 'hello'
+  log(w);   // 'w'
+  // 注意，这时p是模式，不是变量，因此不会被赋值。如果p也要作为变量赋值，可以写成下面这样。
+  let obj2 = {
+    p: [
+      'hello',
+      {w1: "w1"}
+    ]
+  };
+  let {p, p: [x1, { w1 } ]} = obj2;
+  log(x1);   // 'hello'
+  log(w1);   // 'w1'
+  log(p);    // p: ['hello',{w1: "w1"}]
+  // 另一个例子 
+  const node = {
+    loc: {
+      start: {
+        line: 1,
+        column: 5
+      }
+    }
+  };
+  let { loc, loc: { start }, loc: { start: { line }} } = node;
+  log(loc);     // {start: {line: 1,column: 5}}
+  log(start);   // {line: 1,column: 5}
+  log(line);    // 1
+  // 上面代码有三次解构赋值，分别是对loc、start、line三个属性的解构赋值。
+  // 注意，最后一次对line属性的解构赋值之中，只有line是变量，loc和start都是模式，不是变量。
+  // 嵌套赋值例子
+  let obj3 = {};
+  let arr3 = [];
+  ({foo7: obj3.foo7, bar7: arr3[0]} = {foo7: 'foo7', bar7: true});
+  log(obj3.foo7);
+  log(arr3[0]);
+
+  // 如果解构模式是嵌套的对象，而且子对象所在的父属性不存在，那么将会报错。
+  // let {noo: {moo}} = {baz: 'baz'}  // 报错
+  // 上面代码中，等号左边对象的noo属性，对应一个子对象。该子对象的moo属性，解构时会报错。原因很简单，因为noo这时等于undefined，再取子属性就会报错
+
+  // 对象的解构赋值可以取到继承的属性。
+  let Obj1 = {};
+  let Obj2 = {foo: 'foo'};
+  Object.setPrototypeOf(Obj1, Obj2);
+  const {foo: Foo} = Obj1;
+  log(Foo);   // 'foo'
+  // 上面代码中，对象Obj1的原型对象是Obj2。foo属性不是Obj1自身的属性，而是继承自Obj2的属性，解构赋值可以取到这个属性。
+
+
+  // 默认值
+  let {h1 = 3} = {};
+  log(h1);  // 3
+
+  let {h2, j2 = 5} = {h2: 1};
+  log(h2);  // 1
+  log(j2);  // 5
+
+  let {h3: j3 = 3} = {};
+  log(j3);  // 3
+
+  let {h4: j4 = 3} = {h4: 5};
+  log(j4);  // 5
+
+  let { message: msg = 'Something went wrong' } = {};
+  log(msg) // "Something went wrong"
+
+  // 默认值生效的条件是，对象的属性值严格等于undefined。
+  let {l = 3} = {l: undefined};
+  log(l);   // 3
+
+  let {k = 3} = {k: null};
+  log(k);   // null
+
+
+
+  // 注意点
+  // （1）如果要将一个已经声明的变量用于解构赋值，必须非常小心。
+  /*
+    let x;
+    {x} = {x: 1};
+    SyntaxError: syntax error
+
+    上面代码的写法会报错，因为 JavaScript 引擎会将{x}理解成一个代码块，从而发生语法错误。
+    只有不将大括号写在行首，避免 JavaScript 将其解释为代码块，才能解决这个问题。
+  */
+  // 正确的写法
+  let u;
+  ({u} = {u: 1});
+  log(u);   // 1
+  // 上面代码将整个解构赋值语句，放在一个圆括号里面，就可以正确执行
+
+  // （2）解构赋值允许等号左边的模式之中，不放置任何变量名。因此，可以写出非常古怪的赋值表达式。
+  ({} = [true, false]);
+  ({} = 'abc');
+  ({} = []);
+  // 上面的表达式虽然毫无意义，但是语法是合法的，可以执行。
+
+  // （3）由于数组本质是特殊的对象，因此可以对数组进行对象属性的解构。
+  let Arr = [1, 2, 3];
+  let {0 : First, [Arr.length - 1] : Last} = Arr;
+  log(First);   // 1
+  log(Last);    // 3
+  // 上面代码对数组进行对象解构。数组arr的0键对应的值是1，[arr.length - 1]就是2键，对应的值是3。
+</script>
+</html>
